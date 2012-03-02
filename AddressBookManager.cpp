@@ -3,8 +3,8 @@
 AddressBookManager::AddressBookManager() { 
 	info = new MysqlConnectInfo();
 	info->host = "localhost";
-	info->user = "";
-	info->pass = "";
+	info->user = "root";
+	info->pass = "bn091145";
 	info->db = "addressbook"; //connect to address book
 	info->tables = "contacts"; //only 1 table so far. maybe do array if more
 	//initialize parent class 
@@ -69,3 +69,55 @@ void AddressBookManager::removeEntry(AddressBookEntry entry) {
 	doQuery(query);
 }
 
+AddressBookEntry *AddressBookManager::getEntries(char *search, char *column) {
+	AddressBookEntry *ABentries;
+	char *query = new char[SIZE];
+	int numEntries = 0;
+
+	//if a search is specified, and a column is specified
+	if (strcmp(search, "null") != 0 &&
+		strcmp(column, "null") != 0) {
+		strcpy_s(query, SIZE, "SELECT * FROM ");
+		strcat_s(query, SIZE, info->tables);
+		strcat_s(query, SIZE, " WHERE ");
+		strcat_s(query, SIZE, column);
+		strcat_s(query, SIZE, " LIKE '");
+		strcat_s(query, SIZE, search);
+		strcat_s(query, SIZE, "%'");
+		printf("\nquery = %s\n\n", query);
+		doQuery(query);
+	} else { //otherwise just return everything 
+		//use mysql_num_rows();
+		strcpy_s(query, SIZE, "SELECT * FROM ");
+		strcat_s(query, SIZE, info->tables);
+	    printf("\nquery = %s\n\n", query);
+		doQuery(query);
+	}
+	
+	//set numEntries
+	numEntries = (int)mysql_num_rows(result);
+	printf("\nnumEntries = %i\n\n", numEntries); 
+
+	if (numEntries != 0) { 
+		ABentries = new AddressBookEntry[numEntries];
+		char **entry;
+		for (int i = 0; i < numEntries; i++) {
+			entry = getNextRow();
+			ABentries[i] = AddressBookEntry(entry[0], entry[1], entry[2], entry[3], entry[4], 
+				                             AddressBookEntry::charToRelation(entry[5]));
+			printf_s("\n----| %i |---\n%s\n\n", i+1, ABentries[i].getEntryAsQuery());
+		}
+		entry = NULL;
+		delete entry; //hmm
+	} else {
+		//if there were no entries returned
+		//delete ABentries and return nothing
+		ABentries = NULL;
+		delete ABentries;
+		return NULL;
+	}
+
+	delete query;
+
+	return ABentries;
+}

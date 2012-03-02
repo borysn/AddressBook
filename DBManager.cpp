@@ -78,7 +78,7 @@ void DBManager::doQuery(char *query) {
 		exit(1); 
 	}
 	else {
-		result = mysql_use_result(conn);
+		result = mysql_store_result(conn);
 	}
 }
 
@@ -88,6 +88,10 @@ char **DBManager::getNextRow() {
 	else
 		return NULL;
 } 
+
+MYSQL_RES *DBManager::getResult() {
+	return result;
+}
 
 MYSQL *DBManager::getConnection() {
 	return conn;

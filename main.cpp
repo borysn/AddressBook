@@ -20,10 +20,10 @@ int main() {
 
 	do {
 		printMenu(); 
-		printf(":> ");
+		printf("//:> ");
 		scanf_s("%d", &i);
 		processInput(i); 
-	} while (i != 7);
+	} while (i != 8);
 	
 	printf_s("\n[==================EndTest1==================]\n");
 
@@ -33,14 +33,15 @@ int main() {
 }
 
 void printMenu() { 
-	printf_s("[Menu Options]\n");
-	printf_s("1 : Setup an entry\n");
-	printf_s("2 : Setup a search\n");
-	printf_s("3 : Que an entry\n");
-	printf_s("4 : Que a search\n");
-	printf_s("5 : Edit an entry\n");
-	printf_s("6 : Delete an entry\n");
-	printf_s("7 : Exit Application\n");
+	printf_s("[  __Menu Options__  ]\n");
+	printf_s("1 : Setup an entry   (*)\n");
+	printf_s("2 : Setup a search   (^)\n");
+	printf_s("3 : Que an entry     (*)\n");
+	printf_s("4 : Que a search     (^)\n");
+	printf_s("5 : Edit an entry    \n");
+	printf_s("6 : Delete an entry  \n");
+	printf_s("7 : Retrieve Entries \n");
+	printf_s("8 : Exit Application \n");
 }
 
 void processInput(int option) {
@@ -71,7 +72,7 @@ void processInput(int option) {
 		break;
 	case 4:
 		printf_s("\n[Queing A Search]...\n");
-		//lets see if entry is empty first
+		//lets see if key is empty first
 		if (strcmp(key.getFirstName(), "\0") == 0) {
 			printf_s("\nERROR: NO SEARCH DEFINED!\n\n");
 			break;
@@ -86,18 +87,22 @@ void processInput(int option) {
 		break;
 	case 5:
 		printf_s("\n[Editing an entry]\n\n");
-		printf_s("first setup a new search key\n");
-		key = MakeSearchKey();
+		//lets see if key is empty first
+		if (strcmp(key.getFirstName(), "\0") == 0) {
+			printf_s("\nERROR: NO SEARCH DEFINED!\n\n");
+			break; 
+		}
 		printf_s("\nChecking to see if entry exists using key...\n");
 		printf_s("%s\n", key.getEntryAsKey()); //works
-		if (!ABman->entryExists(key)) {
+		if (!ABman->entryExists(key)) { 
 			printf_s("\n\n[Entry not found. Cannot edit...]\n\n");
-		} else {
+		} else { 
 			printf_s("\n\n[Entry found! Beginning Editing Process]\n\n");
 			printf_s("first create the new entry\n");
 			entry = MakeEntry();
-			ABman->editOldEntry(key, entry);
-		}
+			ABman->editOldEntry(key, entry); 
+			printf_s("\n\n[Finished with editing]\n\n");
+		} 
 		break;
 	case 6:
 		printf_s("\n[Removing an entry]\n\n");		
@@ -110,12 +115,16 @@ void processInput(int option) {
 		printf_s("%s\n", key.getEntryAsKey()); //works
 		if (!ABman->entryExists(key)) {
 			printf_s("\n\n[Entry not found. Cannot delete...]\n\n");
-		} else {
+		} else { 
 			printf_s("\n\n[Entry found! Deleting it.]\n\n");\
 				ABman->removeEntry(key);
 		}
 		break;
 	case 7:
+		printf("\n\n[Retrieving Entries]\n\n"); 
+		setupSearch(); 
+		break;
+	case 8:
 		printf("\n\n[Exiting the application]\n");
 		break;
 	default:
@@ -187,4 +196,24 @@ AddressBookEntry MakeSearchKey() {
 	AddressBookEntry entry = AddressBookEntry(entryInfo[0], entryInfo[1], " ", " ", 
 		                     entryInfo[2], UNKNOWN); 
 	return entry;
+}
+
+void setupSearch() {
+	int size = 64;
+	AddressBookEntry *entries;
+	char *search = new char[size];
+	char *column = new char[size];
+
+	printf_s("Enter search string...\ni.e. \"A\" or \"1-800\"\n");
+	printf_s("//:> ");
+	scanf_s("%s", search); 
+	printf_s("Enter column which applies to search string...\n");
+	printf_s("i.e. if search string = \"A\" then column = \"firstname\"\n");
+	printf_s("//:> ");
+	scanf_s("%s", column);
+
+	entries = ABman->getEntries(search, column);
+	
+	delete search;
+	delete column;
 }

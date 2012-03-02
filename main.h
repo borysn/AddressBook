@@ -14,5 +14,6 @@ AddressBookEntry MakeEntry();
 AddressBookEntry MakeSearchKey();
 void printMenu();
 void processInput(int option);
+void setupSearch();
 
 #endif

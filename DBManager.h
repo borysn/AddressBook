@@ -38,6 +38,7 @@ protected:
 	char **getNextRow(); 
 	//returns result as row (char**)
 	//return null if result is empty 
+	MYSQL_RES *getResult();
 	MYSQL *getConnection();
 	//return conn
 public:

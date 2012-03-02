@@ -132,3 +132,31 @@ RelationShipType AddressBookEntry::intToRelation(int i) {
 	}
 	return type;
 }
+
+RelationShipType AddressBookEntry::charToRelation(char *c) {
+	RelationShipType type;
+	switch (*c) {
+	case '1': 
+		type = UNKNOWN;
+		break;
+	case '2': 
+		type = BUSINESS; 
+		break;
+	case '3': 
+		type = FAMILY; 
+		break;
+	case '4': 
+		type = PLEASURE; 
+		break;
+	case '5': 
+		type = INFO;
+		break;
+	case '6': 
+		type = WORK;
+		break;
+	default: 
+		type = UNKNOWN;
+		break;
+	}
+	return type;
+}

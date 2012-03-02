@@ -26,6 +26,12 @@ public:
 	void addNewEntry(AddressBookEntry entry);
 	void editOldEntry(AddressBookEntry oldEntry, AddressBookEntry newEntry); 
 	void removeEntry(AddressBookEntry entry);
+
+	//retrieval
+	AddressBookEntry *getEntries(char *search, char *column);
+	//return all entries relevant to search/column 
+	//retunrs all entries if search is NULL
+	//returns entries as AddressBookEntry array
 };
 
 #endif

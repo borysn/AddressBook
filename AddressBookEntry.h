@@ -56,6 +56,7 @@ public:
 
 	//conversion for relationship type
 	static RelationShipType intToRelation(int i);
+	static RelationShipType charToRelation(char *c); 
 };
 
 #endif
