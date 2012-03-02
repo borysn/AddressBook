@@ -3,7 +3,7 @@
 
 #include <WinSock.h>
 #include <mysql.h>
-#include <stdlib.h>
+#include <stdlib.h> 
 #include <stdio.h> 
 
 #define SIZE 64
@@ -30,7 +30,7 @@ protected:
 
 	bool setupConnection();
 	//this function will setup the connection then return a pointer to it
-	void setConnectionInfo(MysqlConnectInfo *dbInfo);
+	void setConnectionInfo(MysqlConnectInfo *dbInfo); 
 	//this function will set the connect info
 	void doQuery(char *query); 
 	//this function will perform an sql query, and return a pointer to the result
@@ -41,7 +41,7 @@ protected:
 	MYSQL_RES *getResult();
 	MYSQL *getConnection();
 	//return conn
-public:
+public: 
 	//[con/destructor]
 	DBManager();
 	DBManager(MysqlConnectInfo *dbInfo);

@@ -1,16 +1,16 @@
 #include "AddressBookManager.h"
 
 AddressBookManager::AddressBookManager() { 
-	info = new MysqlConnectInfo();
+	info = new MysqlConnectInfo(); 
 	info->host = "localhost";
-	info->user = "root";
-	info->pass = "bn091145";
+	info->user = "root"; 
+	info->pass = "bn091145"; 
 	info->db = "addressbook"; //connect to address book
 	info->tables = "contacts"; //only 1 table so far. maybe do array if more
 	//initialize parent class 
 	DBManager();
 	setConnectionInfo(info);
-	if(!setupConnection()) {
+	if(!setupConnection()) { 
 		exit(1);
 		printf_s("\nerror:: %s\n\n", mysql_error(conn));
 	}

@@ -33,15 +33,15 @@ int main() {
 }
 
 void printMenu() { 
-	printf_s("[  __Menu Options__  ]\n");
-	printf_s("1 : Setup an entry   (*)\n");
-	printf_s("2 : Setup a search   (^)\n");
-	printf_s("3 : Que an entry     (*)\n");
-	printf_s("4 : Que a search     (^)\n");
-	printf_s("5 : Edit an entry    \n");
-	printf_s("6 : Delete an entry  \n");
-	printf_s("7 : Retrieve Entries \n");
-	printf_s("8 : Exit Application \n");
+	printf_s("[______Menu Options______]\n");
+	printf_s(" 1 : Setup an entry   (*)\n");
+	printf_s(" 2 : Setup a search   (^)\n");
+	printf_s(" 3 : Que an entry     (*)\n");
+	printf_s(" 4 : Que a search     (^)\n");
+	printf_s(" 5 : Edit an entry    (^)\n");
+	printf_s(" 6 : Delete an entry  (^)\n");
+	printf_s(" 7 : Retrieve Entries \n");
+	printf_s(" 8 : Exit Application \n");
 }
 
 void processInput(int option) {
@@ -116,8 +116,25 @@ void processInput(int option) {
 		if (!ABman->entryExists(key)) {
 			printf_s("\n\n[Entry not found. Cannot delete...]\n\n");
 		} else { 
-			printf_s("\n\n[Entry found! Deleting it.]\n\n");\
+			//make sure i want to delete the entry
+			printf_s("\n\n[Entry found!]\n");
+			printf_s("Are you sure you want to delete this entry?(y/n)\n");
+			printf_s("//:> "); 
+			char *c = new char[2];
+			scanf_s("%s", c); 
+			switch (c[0]) {
+			case 'y':
+				printf("[Entry Deleted!]\n\n");
 				ABman->removeEntry(key);
+				break;
+			case 'n':
+				printf("[Entry not deleted!]\n\n");
+				break;
+			default:
+				printf("[Entry not deleted!]\n\n");
+				break;
+			}
+			delete c;
 		}
 		break;
 	case 7:
@@ -204,13 +221,13 @@ void setupSearch() {
 	char *search = new char[size];
 	char *column = new char[size];
 
-	printf_s("Enter search string...\ni.e. \"A\" or \"1-800\"\n");
+	printf_s("Enter search string...\ni.e. \"A\" or \"1-800\" or type \"null\" for nothing\n");
 	printf_s("//:> ");
 	scanf_s("%s", search); 
 	printf_s("Enter column which applies to search string...\n");
-	printf_s("i.e. if search string = \"A\" then column = \"firstname\"\n");
+	printf_s("i.e. if search string = \"A\" then column = \"firstname\" or type \"null\" for nothing");
 	printf_s("//:> ");
-	scanf_s("%s", column);
+	scanf_s("%s", column); 
 
 	entries = ABman->getEntries(search, column);
 	
