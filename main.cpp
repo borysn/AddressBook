@@ -1,10 +1,3 @@
-/*
- *  This is a test of my AddressBook class
- *  this test will be adapted into a display addressbook class
- *
- *  Borys H.N. 2/25/12
- * 
- */
 #include "main.h"
 
 int main() {
