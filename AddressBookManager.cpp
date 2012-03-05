@@ -3,16 +3,16 @@
 AddressBookManager::AddressBookManager() { 
 	info = new MysqlConnectInfo(); 
 	info->host = "localhost";
-	info->user = ""; 
-	info->pass = ""; 
+	info->user = "root"; 
+	info->pass = "bn091145"; 
 	info->db = "addressbook"; //connect to address book
 	info->tables = "contacts"; //only 1 table so far. maybe do array if more
 	//initialize parent class 
 	DBManager();
 	setConnectionInfo(info);
-	if(!setupConnection()) { 
-		exit(1);
+	if(!setupConnection()) {
 		printf_s("\nerror:: %s\n\n", mysql_error(conn));
+		exit(1);
 	}
 }
 
@@ -38,6 +38,8 @@ bool AddressBookManager::entryExists(AddressBookEntry entry){
 			strcmp(tmp[4], entry.getPhoneNum()) == 0) 
 			return true;
 	} 
+	tmp = NULL;
+	query = NULL;
 	delete tmp;
 	delete query;
 	return false;
@@ -50,7 +52,7 @@ void AddressBookManager::order(bool byName){
 void AddressBookManager::addNewEntry(AddressBookEntry entry) {
 	//sample query was about 202 with my address and info
 	//ill keep the size of query at 384 SIZE*6
-	char query[SIZE*6] = "INSERT INTO ";
+	char query[SIZE*6] = "INSERT INTO "; 
 	strcat_s(query, SIZE*6, info->tables); 
 	strcat_s(query, SIZE*6, entry.getEntryAsQuery());
 	printf_s("\nquery = %s\n\n", query);
@@ -116,7 +118,7 @@ AddressBookEntry *AddressBookManager::getEntries(char *search, char *column) {
 		delete ABentries;
 		return NULL;
 	}
-
+	
 	delete query;
 
 	return ABentries;

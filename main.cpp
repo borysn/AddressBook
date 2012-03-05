@@ -3,7 +3,7 @@
  *  this test will be adapted into a display addressbook class
  *
  *  Borys H.N. 2/25/12
- *
+ * 
  */
 #include "main.h"
 
@@ -16,7 +16,7 @@ int main() {
 	entry = AddressBookEntry();
 	key = AddressBookEntry();
 	
-	int i = 0;
+	int i = 0; 
 
 	do {
 		printMenu(); 
@@ -46,15 +46,18 @@ void printMenu() {
 
 void processInput(int option) {
 	switch (option) {
+	//setup an entry
 	case 1:	
 		printf_s("\n[Setting Up An Entry]...\n");
 		entry = MakeEntry();
 		break;
+	//setup a search
 	case 2:
 		printf_s("\n[Setting Up A Search]...\n");
 		key = MakeSearchKey();
 		break;
 	case 3:
+	//que an entry
 		printf_s("\n[Queing An Entry]...\n");
 		//lets see if entry is empty first
 		if (strcmp(entry.getFirstName(), "\0") == 0) {
@@ -70,6 +73,7 @@ void processInput(int option) {
 			printf("\n\n[Entry already exists!]\n\n");
 		}
 		break;
+	//que a search
 	case 4:
 		printf_s("\n[Queing A Search]...\n");
 		//lets see if key is empty first
@@ -85,6 +89,7 @@ void processInput(int option) {
 			printf("\n\n[Entry found!]\n\n");
 		}
 		break;
+	//edit an entry
 	case 5:
 		printf_s("\n[Editing an entry]\n\n");
 		//lets see if key is empty first
@@ -104,6 +109,7 @@ void processInput(int option) {
 			printf_s("\n\n[Finished with editing]\n\n");
 		} 
 		break;
+	//Remove an entry
 	case 6:
 		printf_s("\n[Removing an entry]\n\n");		
 		//lets see if key is empty first
@@ -137,13 +143,16 @@ void processInput(int option) {
 			delete c;
 		}
 		break;
+	//Look at address book
 	case 7:
 		printf("\n\n[Retrieving Entries]\n\n"); 
 		setupSearch(); 
 		break;
+	//Exit 
 	case 8:
 		printf("\n\n[Exiting the application]\n");
 		break;
+	//Just print menu
 	default:
 		printMenu();
 		break;
