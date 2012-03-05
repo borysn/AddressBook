@@ -3,8 +3,8 @@
 AddressBookManager::AddressBookManager() { 
 	info = new MysqlConnectInfo(); 
 	info->host = "localhost";
-	info->user = "root"; 
-	info->pass = "bn091145"; 
+	info->user = ""; 
+	info->pass = ""; 
 	info->db = "addressbook"; //connect to address book
 	info->tables = "contacts"; //only 1 table so far. maybe do array if more
 	//initialize parent class 
